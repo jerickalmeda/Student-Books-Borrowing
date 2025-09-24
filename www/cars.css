@@ -5,6 +5,76 @@
     box-sizing: border-box;
 }
 
+/* Font Awesome Fallbacks - CSS-only icons using Unicode */
+.icon-fallback {
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
+/* Icon loading state */
+.icon-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.icon-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Enhanced fallback icons - more comprehensive mapping */
+.icon-fallback::before,
+.fas:not([class*="fa-"])::before,
+.fab:not([class*="fa-"])::before {
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', Arial, sans-serif;
+    font-style: normal;
+}
+
+/* Specific icon fallbacks */
+.fa-car::before { content: "🚗"; }
+.fa-star::before { content: "⭐"; }
+.fa-newspaper::before { content: "📰"; }
+.fa-tools::before { content: "🔧"; }
+.fa-users::before { content: "👥"; }
+.fa-search::before { content: "🔍"; }
+.fa-calculator::before { content: "🧮"; }
+.fa-handshake::before { content: "🤝"; }
+.fa-gas-pump::before { content: "⛽"; }
+.fa-tachometer-alt::before { content: "📊"; }
+.fa-dollar-sign::before { content: "$"; }
+.fa-bolt::before { content: "⚡"; }
+.fa-envelope::before { content: "✉️"; }
+.fa-phone::before { content: "📞"; }
+.fa-map-marker-alt::before { content: "📍"; }
+.fa-chevron-up::before { content: "↑"; }
+.fa-facebook::before { content: "📘"; }
+.fa-twitter::before { content: "🐦"; }
+.fa-instagram::before { content: "📷"; }
+.fa-youtube::before { content: "📺"; }
+.fa-car-side::before { content: "🏎️"; }
+.fa-car-alt::before { content: "🚙"; }
+.fa-truck::before { content: "�"; }
+.fa-car-crash::before { content: "🏎️"; }
+.fa-charging-station::before { content: "🔌"; }
+.fa-oil-can::before { content: "�️"; }
+.fa-tire::before { content: "⚫"; }
+.fa-battery-half::before { content: "🔋"; }
+.fa-lightbulb::before { content: "�"; }
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;

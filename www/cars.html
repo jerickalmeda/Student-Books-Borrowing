@@ -6,16 +6,103 @@
     <title>AutoWorld - Your Ultimate Car Resource</title>
     <link rel="stylesheet" href="cars.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Font Awesome - Primary CDN (jsDelivr) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" crossorigin="anonymous">
+    
+    <!-- Alternative CDN Sources (loaded via JavaScript if primary fails) -->
+    <link rel="preconnect" href="https://use.fontawesome.com">
+    <link rel="preconnect" href="https://maxcdn.bootstrapcdn.com">
+    
+    <!-- Font Awesome Loading Check and Fallback -->
+    <script>
+        // Enhanced Font Awesome fallback system
+        function checkFontAwesome() {
+            // Create test element to check if Font Awesome is loaded
+            const testEl = document.createElement('i');
+            testEl.className = 'fas fa-car';
+            testEl.style.position = 'absolute';
+            testEl.style.left = '-9999px';
+            document.body.appendChild(testEl);
+            
+            const computedStyle = window.getComputedStyle(testEl, ':before');
+            const fontFamily = computedStyle.getPropertyValue('font-family');
+            document.body.removeChild(testEl);
+            
+            // If Font Awesome is not loaded, use fallbacks
+            if (!fontFamily || fontFamily.indexOf('Font Awesome') === -1) {
+                console.log('Font Awesome not loaded, using fallbacks...');
+                
+                // Try alternative CDN first
+                const link1 = document.createElement('link');
+                link1.rel = 'stylesheet';
+                link1.href = 'https://use.fontawesome.com/releases/v6.4.0/css/all.css';
+                link1.onerror = function() {
+                    // If that fails, try another CDN
+                    const link2 = document.createElement('link');
+                    link2.rel = 'stylesheet';
+                    link2.href = 'https://pro.fontawesome.com/releases/v5.15.4/css/all.css';
+                    link2.onerror = function() {
+                        // Final fallback - use emoji/unicode
+                        useEmojiIcons();
+                    };
+                    document.head.appendChild(link2);
+                };
+                document.head.appendChild(link1);
+            }
+        }
+        
+        function useEmojiIcons() {
+            // Replace Font Awesome icons with emoji fallbacks
+            const iconMap = {
+                'fa-car': '🚗',
+                'fa-star': '⭐',
+                'fa-newspaper': '📰',
+                'fa-tools': '🔧',
+                'fa-users': '👥',
+                'fa-search': '🔍',
+                'fa-calculator': '🧮',
+                'fa-handshake': '🤝',
+                'fa-gas-pump': '⛽',
+                'fa-tachometer-alt': '📊',
+                'fa-dollar-sign': '$',
+                'fa-bolt': '⚡',
+                'fa-envelope': '✉️',
+                'fa-phone': '📞',
+                'fa-map-marker-alt': '📍',
+                'fa-chevron-up': '↑',
+                'fa-facebook': '📘',
+                'fa-twitter': '🐦',
+                'fa-instagram': '📷',
+                'fa-youtube': '📺'
+            };
+            
+            document.querySelectorAll('i[class*="fa-"]').forEach(icon => {
+                for (const [faClass, emoji] of Object.entries(iconMap)) {
+                    if (icon.classList.contains(faClass)) {
+                        icon.innerHTML = emoji;
+                        icon.style.fontFamily = 'Arial, sans-serif';
+                        icon.style.fontSize = '1em';
+                        break;
+                    }
+                }
+            });
+        }
+        
+        // Check Font Awesome loading after DOM is ready
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkFontAwesome, 1000);
+        });
+    </script>
 </head>
 <body>
     <!-- Header & Navigation -->
     <header class="header">
         <nav class="navbar">
             <div class="nav-container">
-                <div class="nav-logo">
-                    <i class="fas fa-car"></i>
-                    <span>AutoWorld Iligan - Cagayan branch</span>
+                                <div class="nav-logo">
+                    <i class="fas fa-car" data-fallback="🚗"></i>
+                    <span>AutoWorld</span>
                 </div>
                 <ul class="nav-menu">
                     <li><a href="#home">Home</a></li>
