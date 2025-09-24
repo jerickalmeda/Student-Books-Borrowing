@@ -108,9 +108,11 @@ body {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%), 
+                url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80') center/cover;
     color: white;
     padding: 120px 20px 80px;
+    position: relative;
 }
 
 .hero-content {
@@ -183,10 +185,13 @@ body {
     align-items: center;
 }
 
-.hero-image i {
-    font-size: 15rem;
-    opacity: 0.3;
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     animation: float 3s ease-in-out infinite;
+    opacity: 0.9;
 }
 
 @keyframes float {
@@ -285,17 +290,20 @@ section h2 {
 }
 
 .review-image {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
+    position: relative;
 }
 
-.review-image i {
-    font-size: 4rem;
-    color: white;
-    opacity: 0.8;
+.review-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.review-card:hover .review-image img {
+    transform: scale(1.05);
 }
 
 .review-content {
@@ -623,26 +631,28 @@ section h2 {
 }
 
 .gallery-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     height: 250px;
     border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
 .gallery-card:hover {
     transform: scale(1.05);
 }
 
-.gallery-card i {
-    font-size: 4rem;
-    color: white;
-    opacity: 0.7;
+.gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card:hover img {
+    transform: scale(1.1);
 }
 
 .gallery-overlay {
@@ -763,6 +773,44 @@ section h2 {
     color: #a0aec0;
 }
 
+/* Image Loading States */
+img {
+    transition: opacity 0.3s ease;
+}
+
+img[loading="lazy"] {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out 0.1s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Image Hover Effects */
+.review-image, .gallery-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.review-image::after, .gallery-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.review-card:hover .review-image::after,
+.gallery-card:hover::after {
+    opacity: 1;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-menu {
@@ -782,8 +830,9 @@ section h2 {
         font-size: 2.5rem;
     }
     
-    .hero-image i {
-        font-size: 8rem;
+    .hero-image img {
+        max-width: 90%;
+        border-radius: 15px;
     }
     
     .stats-grid {
